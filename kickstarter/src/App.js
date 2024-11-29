@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Table from "./Components/Table";
 import Pagination from "./Components/Pagination";
+import './App.css'; 
 
 const RECORD_PER_PAGE = 5;
 
 function App() {
-  const [pageData , setPageData] = useState([]);
-  const [error,setError] = useState(null);
+  const [pageData, setPageData] = useState([]);
+  const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     fetch('./data.json')
-      .then((res) => res.json())  
-      .then((data) => setPageData(data)) 
+      .then((res) => res.json())
+      .then((data) => setPageData(data))
       .catch((err) => {
         setError("Something went wrong while fetching the data, Please refresh the page");
       });
@@ -25,19 +26,19 @@ function App() {
   );
 
   return (
-    <div style={{ fontFamily: "Arial, sans-serif", padding: "20px" }}>
-      <h1 style={{ textAlign: "center" }}>Kickstarter Projects</h1>
-      {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
+    <div className="app-container">
+      <h1 className="app-heading">Kickstarter Projects</h1>
+      {error && <p className="error-message">{error}</p>}
       {!error && (
-      <>
-        <Table data={paginatedData} />
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-        />
-      </>
-    )}
+        <>
+          <Table data={paginatedData} />
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
+        </>
+      )}
     </div>
   );
 }

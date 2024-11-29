@@ -1,49 +1,81 @@
 import React from "react";
+import './Pagination.css'; 
+
+const maxPagesToShow = 5; 
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
-  const handlePrevious = () => {
-    if (currentPage > 1) onPageChange(currentPage - 1);
-  };
+  const getPaginationItems = () => {
+    const pageNumbers = [];
+    let startPage, endPage;
 
-  const handleNext = () => {
-    if (currentPage < totalPages) onPageChange(currentPage + 1);
+    if (totalPages <= maxPagesToShow) {
+      startPage = 1;
+      endPage = totalPages;
+    } else {
+      if (currentPage <= 3) {
+        startPage = 1;
+        endPage = maxPagesToShow;
+      } else if (currentPage + 2 >= totalPages) {
+        startPage = totalPages - maxPagesToShow + 1;
+        endPage = totalPages;
+      } else {
+        startPage = currentPage - 2;
+        endPage = currentPage + 2;
+      }
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(i);
+    }
+
+    const paginationItems = [];
+
+    if (startPage > 1) {
+      paginationItems.push(1);
+      if (startPage > 2) paginationItems.push("...");
+    }
+
+    paginationItems.push(...pageNumbers);
+
+    if (endPage < totalPages) {
+      if (endPage < totalPages - 1) paginationItems.push("...");
+      paginationItems.push(totalPages);
+    }
+
+    return paginationItems;
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", marginTop: "1.6rem" }}>
-      <button
-        onClick={handlePrevious}
-        disabled={currentPage === 1}
-        style={styles.button}
-      >
-        Previous
-      </button>
-      <span style={{ margin: "0.6rem", fontSize: "16px" }}>
-        Page {currentPage} of {totalPages}
-      </span>
-      <button
-        onClick={handleNext}
-        disabled={currentPage === totalPages}
-        style={styles.button}
-      >
-        Next
-      </button>
+    <div className="pagination-container">
+      <ul className="pagination-list">
+        <li
+          className={`pagination-button ${currentPage === 1 ? "disabled" : ""}`}
+          onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
+        >
+          {"<"}
+        </li>
+
+        {getPaginationItems().map((item, index) => (
+          <li
+            key={index}
+            className={`pagination-item ${item === currentPage ? "active" : ""} ${item === "..." ? "disabled" : ""}`}
+            onClick={() =>
+              item !== "..." && item !== currentPage && onPageChange(item)
+            }
+          >
+            {item}
+          </li>
+        ))}
+
+        <li
+          className={`pagination-button ${currentPage === totalPages ? "disabled" : ""}`}
+          onClick={() => currentPage < totalPages && onPageChange(currentPage + 1)}
+        >
+          {">"}
+        </li>
+      </ul>
     </div>
   );
-};
-
-const styles = {
-  button: {
-    padding: "0.6rem 1rem",
-    margin: "0 5px",
-    fontSize: "14px",
-    borderRadius: "5px",
-    border: "1px solid #4CAF50",
-    backgroundColor: "#4CAF50",
-    color: "white",
-    cursor: "pointer",
-    transition: "background-color 0.3s",
-  },
-};
+}
 
 export default Pagination;
