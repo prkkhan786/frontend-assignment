@@ -1,60 +1,73 @@
-
 .pagination-container {
-    text-align: center;
-    margin-top: 1.6rem;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.pagination-list {
+  display: flex;
+  list-style: none;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+}
+
+.pagination-arrow {
+  cursor: pointer;
+  padding: 8px 12px;
+  font-size: 18px;
+  color: #444;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+
+.pagination-arrow.disabled {
+  cursor: not-allowed;
+  color: #aaa;
+  border-color: #f0f0f0;
+  background-color: #f9f9f9;
+}
+
+.pagination-item {
+  cursor: pointer;
+  padding: 8px 12px;
+  font-size: 16px;
+  color: #444;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+
+.pagination-item.active {
+  background-color: #4caf50;
+  color: #fff;
+  font-weight: bold;
+  border-color: #4caf50;
+}
+
+.pagination-item:hover:not(.active):not(.disabled),
+.pagination-arrow:hover:not(.disabled) {
+  background-color: #f0f0f0;
+}
+
+.pagination-item.disabled {
+  cursor: not-allowed;
+  color: #aaa;
+  background-color: #f9f9f9;
+}
+
+@media (max-width: 600px) {
   .pagination-list {
-    list-style-type: none;
-    padding: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    gap: 0.2rem
   }
-  
-  .pagination-button {
-    margin: 0 10px;
-    cursor: pointer;
-    padding: 8px 12px;
-    background-color: rgb(76, 175, 80);
-    color: #fff;
-    border-radius: 50%;
-    transition: background-color 0.3s;
-    font-size: 18px;
-  }
-  
-  .pagination-button.disabled {
-    background-color: #ddd;
-    color: #aaa;
-    cursor: not-allowed;
-  }
-  
-  .pagination-button:hover {
-    background-color: #64b24d; 
-  }
-  
+
+  .pagination-arrow,
   .pagination-item {
-    display: inline;
-    margin: 0 5px;
-    cursor: pointer;
-    padding: 8px 12px;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-    background-color: transparent;
-    color: rgb(76, 175, 80);
+    padding: 6px 10px;
+    font-size: 14px;
   }
-  
-  .pagination-item.active {
-    font-weight: bold;
-    background-color: rgb(76, 175, 80);
-    color: #fff;
-  }
-  
-  .pagination-item.disabled {
-    cursor: not-allowed;
-  }
-  
-  .pagination-item:hover {
-    background-color: #f0f0f0; 
-  }
-  
+}

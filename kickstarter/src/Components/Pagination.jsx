@@ -1,7 +1,7 @@
 import React from "react";
-import './Pagination.css'; 
+import "./Pagination.css";
 
-const maxPagesToShow = 5; 
+const maxPagesToShow = 5;
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const getPaginationItems = () => {
@@ -49,16 +49,18 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
     <div className="pagination-container">
       <ul className="pagination-list">
         <li
-          className={`pagination-button ${currentPage === 1 ? "disabled" : ""}`}
+          className={`pagination-arrow ${currentPage === 1 ? "disabled" : ""}`}
           onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
         >
-          {"<"}
+          «
         </li>
 
         {getPaginationItems().map((item, index) => (
           <li
             key={index}
-            className={`pagination-item ${item === currentPage ? "active" : ""} ${item === "..." ? "disabled" : ""}`}
+            className={`pagination-item ${
+              item === currentPage ? "active" : ""
+            } ${item === "..." ? "disabled" : ""}`}
             onClick={() =>
               item !== "..." && item !== currentPage && onPageChange(item)
             }
@@ -68,14 +70,16 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         ))}
 
         <li
-          className={`pagination-button ${currentPage === totalPages ? "disabled" : ""}`}
+          className={`pagination-arrow ${
+            currentPage === totalPages ? "disabled" : ""
+          }`}
           onClick={() => currentPage < totalPages && onPageChange(currentPage + 1)}
         >
-          {">"}
+          »
         </li>
       </ul>
     </div>
   );
-}
+};
 
 export default Pagination;
